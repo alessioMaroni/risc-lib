@@ -10,4 +10,10 @@ __read_csr_mstatus(void);
 riscv_xlen_t 
 read_csr_mstatus(void);
 
+__attribute__((always_inline)) static inline riscv_xlen_t 
+__read_csr_misa(void);
+
+riscv_xlen_t 
+read_csr_misa(void);
+
 #endif /* RISCV_CSRS_H */

@@ -1,5 +1,5 @@
 #include <riscv/riscv_xlen.h>
-#include <csr_config.h>
+#include <csrs_configuration.h>
 
 int lib_test(void)
 {

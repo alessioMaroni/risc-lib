@@ -18,13 +18,14 @@ set_property(CACHE TARGET_XLEN PROPERTY STRINGS "32" "64")
 set(CSR_PERL_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/codegen/csrs/csrs.pl")
 set(CSR_JSON_FILE   "${CMAKE_CURRENT_SOURCE_DIR}/codegen/csrs/csrs.json")
 set(CSR_GEN_DIR     "${CMAKE_CURRENT_BINARY_DIR}/gen")
-set(CSR_OUT_HEADER  "${CSR_GEN_DIR}/csr_config.h")
+set(CSR_OUT_HEADER  "${CSR_GEN_DIR}/csrs_configuration.h")
 
 add_custom_command(
     OUTPUT "${CSR_OUT_HEADER}"
     COMMAND "${PERL_EXECUTABLE}" "${CSR_PERL_SCRIPT}"
             --core "${TARGET_PROC}"
             --xlen "${TARGET_XLEN}"
+            --in   "${CSR_JSON_FILE}"
             --out  "${CSR_OUT_HEADER}"
     DEPENDS
         "${CSR_PERL_SCRIPT}"
