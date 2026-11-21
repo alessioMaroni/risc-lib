@@ -1,0 +1,9 @@
+{
+    "csrs": [
+        {
+            "name": "mstatus",
+            "address": "0x300",
+            "fields": []
+        }
+    ]
+}

@@ -1,4 +1,5 @@
 #include <riscv/riscv_xlen.h>
+#include <csr_config.h>
 
 int lib_test(void)
 {

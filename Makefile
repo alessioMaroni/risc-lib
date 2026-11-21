@@ -3,6 +3,9 @@ CMAKE_TOOLCHAIN_FILE    := cmake/toolchains/rv32-toolchain.cmake
 CMAKE_TEST_LIB_OBJ      := $(CMAKE_BUILD_DIR)/CMakeFiles/riscvlib_tests.dir/tests/toolchain/lib_test.c.obj
 CMAKE_APP_ELF           := $(CMAKE_BUILD_DIR)/riscvlib_app
 
+TARGET_PROC             ?= generic
+TARGET_XLEN             ?= 32
+
 .PHONY: clean
 clean:
 	rm -rf $(CMAKE_BUILD_DIR)
@@ -16,7 +19,10 @@ verify_test_lib:
 build_test:
 	@echo "Building library..."
 	@if [ ! -f $(CMAKE_BUILD_DIR)/CMakeCache.txt ]; then \
-		cmake -S . -B $(CMAKE_BUILD_DIR) -DCMAKE_TOOLCHAIN_FILE=$(CMAKE_TOOLCHAIN_FILE); \
+		cmake -S . -B $(CMAKE_BUILD_DIR) \
+			-DCMAKE_TOOLCHAIN_FILE=$(CMAKE_TOOLCHAIN_FILE) \
+			-DTARGET_PROC=$(TARGET_PROC) \
+			-DTARGET_XLEN=$(TARGET_XLEN); \
 	fi
 	cmake --build $(CMAKE_BUILD_DIR) --target riscvlib_tests
 
@@ -24,7 +30,10 @@ build_test:
 build_app:
 	@echo "Building bare-metal app..."
 	@if [ ! -f $(CMAKE_BUILD_DIR)/CMakeCache.txt ]; then \
-		cmake -S . -B $(CMAKE_BUILD_DIR) -DCMAKE_TOOLCHAIN_FILE=$(CMAKE_TOOLCHAIN_FILE); \
+		cmake -S . -B $(CMAKE_BUILD_DIR) \
+			-DCMAKE_TOOLCHAIN_FILE=$(CMAKE_TOOLCHAIN_FILE) \
+			-DTARGET_PROC=$(TARGET_PROC) \
+			-DTARGET_XLEN=$(TARGET_XLEN); \
 	fi
 	cmake --build $(CMAKE_BUILD_DIR) --target riscvlib_app
 
