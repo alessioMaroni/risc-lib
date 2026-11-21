@@ -3,75 +3,91 @@
     {
       "name": "riscv_priv_mode_t",
       "values": [
-            { "name": "PRIV_USER",       "value": "0x0", "comment": "00: User Mode" },
-            { "name": "PRIV_SUPERVISOR", "value": "0x1", "comment": "01: Supervisor Mode" },
-            { "name": "PRIV_MACHINE",    "value": "0x3", "comment": "11: Machine Mode" }
-        ]
+        { "name": "PRIV_USER",       "value": "0x0", "comment": "00: User Mode" },
+        { "name": "PRIV_SUPERVISOR", "value": "0x1", "comment": "01: Supervisor Mode" },
+        { "name": "PRIV_RESERVED",   "value": "0x2", "comment": "10: Reserved" },
+        { "name": "PRIV_MACHINE",    "value": "0x3", "comment": "11: Machine Mode" }
+      ]
     },
     {
       "name": "riscv_ext_state_t",
       "values": [
-            { "name": "EXT_STATE_OFF",     "value": "0x0", "comment": "00: Off" },
-            { "name": "EXT_STATE_INITIAL", "value": "0x1", "comment": "01: Initialized" },
-            { "name": "EXT_STATE_CLEAN",   "value": "0x2", "comment": "10: Clean" },
-            { "name": "EXT_STATE_DIRTY",   "value": "0x3", "comment": "11: Dirty" }
-        ]
+        { "name": "EXT_STATE_OFF",     "value": "0x0", "comment": "00: Off" },
+        { "name": "EXT_STATE_INITIAL", "value": "0x1", "comment": "01: Initialized" },
+        { "name": "EXT_STATE_CLEAN",   "value": "0x2", "comment": "10: Clean" },
+        { "name": "EXT_STATE_DIRTY",   "value": "0x3", "comment": "11: Dirty" }
+      ]
     },
     {
-        "name": "riscv_mxl_t",
-        "values": [
-            { "name": "MXL_32",       "value": "0x1", "comment": "01: 32-bit base ISA" },
-            { "name": "MXL_64",       "value": "0x2", "comment": "10: 64-bit base ISA" },
-            { "name": "MXL_RESERVED", "value": "0x3", "comment": "11: Reserved" }
-        ]
+      "name": "riscv_mxl_t",
+      "values": [
+        { "name": "MXL_RESERVED", "value": "0x0", "comment": "00: Reserved" },
+        { "name": "MXL_32",       "value": "0x1", "comment": "01: 32-bit base ISA (RV32)" },
+        { "name": "MXL_64",       "value": "0x2", "comment": "10: 64-bit base ISA (RV64)" },
+        { "name": "MXL_128",      "value": "0x3", "comment": "11: 128-bit base ISA (RV128)" }
+      ]
     }
   ],
   "csrs": [
     {
-        "name"    : "mstatus",
-        "address" : "0x300",
-        "xlen"    : "all",
-        "core"    : "all",
-        "fields"  : [
-            { "name": "VS",  "msb": 10, "lsb": 9,  "xlen": "all", "comment": "Vector Extension State (VS)" },
-            { "name": "MPP", "msb": 12, "lsb": 11, "xlen": "all", "comment": "Previous Privilege Mode (MPP)" },
-            { "name": "FS",  "msb": 14, "lsb": 13, "xlen": "all", "comment": "Floating-Point Extension State (FS)" },
-            { "name": "XS",  "msb": 16, "lsb": 15, "xlen": "all", "comment": "User Extension State (XS)" },
-            { "name": "SD",  "msb": 31, "lsb": 31, "xlen": 32,    "comment": "State Dirty Summary (SD - RV32)" },
-            { "name": "SD",  "msb": 63, "lsb": 63, "xlen": 64,    "comment": "State Dirty Summary (SD - RV64)" },
-            { "name": "SIE",  "msb": 1,  "lsb": 1,  "xlen": "all", "comment": "Supervisor Interrupt Enable (SIE)" },
-            { "name": "MIE",  "msb": 3,  "lsb": 3,  "xlen": "all", "comment": "Machine Interrupt Enable (MIE)" },
-            { "name": "SPIE", "msb": 5,  "lsb": 5,  "xlen": "all", "comment": "Supervisor Previous Interrupt Enable (SPIE)" },
-            { "name": "MPIE", "msb": 7,  "lsb": 7,  "xlen": "all", "comment": "Machine Previous Interrupt Enable (MPIE)" },
-            { "name": "MPRV", "msb": 17, "lsb": 17, "xlen": "all", "comment": "Modify Privilege (MPRV)" }
-        ]
+      "name": "mstatus",
+      "address": "0x300",
+      "xlen": "all",
+      "core": "all",
+      "status": "partial",
+      "fields": [
+        { "name": "SIE",  "msb": 1,  "lsb": 1,  "xlen": "all", "comment": "Supervisor Interrupt Enable (SIE)" },
+        { "name": "MIE",  "msb": 3,  "lsb": 3,  "xlen": "all", "comment": "Machine Interrupt Enable (MIE)" },
+        { "name": "SPIE", "msb": 5,  "lsb": 5,  "xlen": "all", "comment": "Supervisor Previous Interrupt Enable (SPIE)" },
+        { "name": "MPIE", "msb": 7,  "lsb": 7,  "xlen": "all", "comment": "Machine Previous Interrupt Enable (MPIE)" },
+        { "name": "VS",   "msb": 10, "lsb": 9,  "xlen": "all", "enum": "riscv_ext_state_t", "comment": "Vector Extension Context State (VS)" },
+        { "name": "MPP",  "msb": 12, "lsb": 11, "xlen": "all", "enum": "riscv_priv_mode_t", "comment": "Machine Previous Privilege Mode (MPP)" },
+        { "name": "FS",   "msb": 14, "lsb": 13, "xlen": "all", "enum": "riscv_ext_state_t", "comment": "Floating-Point Extension Context State (FS)" },
+        { "name": "XS",   "msb": 16, "lsb": 15, "xlen": "all", "enum": "riscv_ext_state_t", "comment": "Additional User-Mode Extensions Context State (XS)" },
+        { "name": "MPRV", "msb": 17, "lsb": 17, "xlen": "all", "comment": "Modify Privilege (MPRV)" },
+        { "name": "SD",   "msb": 31, "lsb": 31, "xlen": 32,    "comment": "State Dirty Summary across FS, VS, and XS (SD - RV32)" },
+        { "name": "SD",   "msb": 63, "lsb": 63, "xlen": 64,    "comment": "State Dirty Summary across FS, VS, and XS (SD - RV64)" }
+      ]
     },
     {
-        "name"    : "misa",
-        "address" : "0x301",
-        "xlen"    : "all",
-        "core"    : "all",
-        "fields"  : [
-            { "name": "EXTENSIONS", "msb": 25, "lsb": 0,  "xlen": "all", "comment": "Extensions[25:0] (WARL)" },
-            { "name": "EXT_A",      "msb": 0,  "lsb": 0,  "xlen": "all", "comment": "Atomic extension" },
-            { "name": "EXT_B",      "msb": 1,  "lsb": 1,  "xlen": "all", "comment": "B extension (Zba, Zbb, Zbs)" },
-            { "name": "EXT_C",      "msb": 2,  "lsb": 2,  "xlen": "all", "comment": "Compressed extension" },
-            { "name": "EXT_D",      "msb": 3,  "lsb": 3,  "xlen": "all", "comment": "Double-precision floating-point extension" },
-            { "name": "EXT_E",      "msb": 4,  "lsb": 4,  "xlen": "all", "comment": "RV32E/64E base ISA" },
-            { "name": "EXT_F",      "msb": 5,  "lsb": 5,  "xlen": "all", "comment": "Single-precision floating-point extension" },
-            { "name": "EXT_H",      "msb": 7,  "lsb": 7,  "xlen": "all", "comment": "Hypervisor extension" },
-            { "name": "EXT_I",      "msb": 8,  "lsb": 8,  "xlen": "all", "comment": "RV32I/64I base ISA" },
-            { "name": "EXT_M",      "msb": 12, "lsb": 12, "xlen": "all", "comment": "Integer Multiply/Divide extension" },
-            { "name": "EXT_N",      "msb": 13, "lsb": 13, "xlen": "all", "comment": "Tentatively reserved for User-Level Interrupts extension" },
-            { "name": "EXT_P",      "msb": 15, "lsb": 15, "xlen": "all", "comment": "Tentatively reserved for Packed-SIMD extension" },
-            { "name": "EXT_Q",      "msb": 16, "lsb": 16, "xlen": "all", "comment": "Quad-precision floating-point extension" },
-            { "name": "EXT_S",      "msb": 18, "lsb": 18, "xlen": "all", "comment": "Supervisor mode implemented" },
-            { "name": "EXT_U",      "msb": 20, "lsb": 20, "xlen": "all", "comment": "User mode implemented" },
-            { "name": "EXT_V",      "msb": 21, "lsb": 21, "xlen": "all", "comment": "Vector extension" },
-            { "name": "EXT_X",      "msb": 23, "lsb": 23, "xlen": "all", "comment": "Non-standard extensions present" },
-            { "name": "MXL",        "msb": 31, "lsb": 30, "xlen": 32,    "comment": "Machine XLEN (RV32)" },
-            { "name": "MXL",        "msb": 63, "lsb": 62, "xlen": 64,    "comment": "Machine XLEN (RV64)" }
-        ]
+      "name": "misa",
+      "address": "0x301",
+      "xlen": "all",
+      "core": "all",
+      "status": "partial",
+      "fields": [
+        {
+          "name": "EXTENSIONS",
+          "msb": 25,
+          "lsb": 0,
+          "xlen": "all",
+          "kind": "aggregate",
+          "subfields": [
+            "EXT_A", "EXT_B", "EXT_C", "EXT_D", "EXT_E", "EXT_F",
+            "EXT_H", "EXT_I", "EXT_M", "EXT_N", "EXT_P", "EXT_Q",
+            "EXT_S", "EXT_U", "EXT_V", "EXT_X"
+          ],
+          "comment": "Extensions[25:0] aggregate bitmask (WARL)"
+        },
+        { "name": "EXT_A", "msb": 0,  "lsb": 0,  "xlen": "all", "parent": "EXTENSIONS", "comment": "Atomic extension" },
+        { "name": "EXT_B", "msb": 1,  "lsb": 1,  "xlen": "all", "parent": "EXTENSIONS", "comment": "Bit-Manipulation extension (composed of bit-manipulation sub-extensions such as Zba, Zbb, Zbs)" },
+        { "name": "EXT_C", "msb": 2,  "lsb": 2,  "xlen": "all", "parent": "EXTENSIONS", "comment": "Compressed extension" },
+        { "name": "EXT_D", "msb": 3,  "lsb": 3,  "xlen": "all", "parent": "EXTENSIONS", "comment": "Double-precision floating-point extension" },
+        { "name": "EXT_E", "msb": 4,  "lsb": 4,  "xlen": "all", "parent": "EXTENSIONS", "comment": "RV32E/64E base ISA" },
+        { "name": "EXT_F", "msb": 5,  "lsb": 5,  "xlen": "all", "parent": "EXTENSIONS", "comment": "Single-precision floating-point extension" },
+        { "name": "EXT_H", "msb": 7,  "lsb": 7,  "xlen": "all", "parent": "EXTENSIONS", "comment": "Hypervisor extension" },
+        { "name": "EXT_I", "msb": 8,  "lsb": 8,  "xlen": "all", "parent": "EXTENSIONS", "comment": "RV32I/64I base ISA" },
+        { "name": "EXT_M", "msb": 12, "lsb": 12, "xlen": "all", "parent": "EXTENSIONS", "comment": "Integer Multiply/Divide extension" },
+        { "name": "EXT_N", "msb": 13, "lsb": 13, "xlen": "all", "parent": "EXTENSIONS", "comment": "Tentatively reserved for User-Level Interrupts extension (RISC-V Priv Spec v1.12)" },
+        { "name": "EXT_P", "msb": 15, "lsb": 15, "xlen": "all", "parent": "EXTENSIONS", "comment": "Tentatively reserved for Packed-SIMD extension (RISC-V Priv Spec v1.12)" },
+        { "name": "EXT_Q", "msb": 16, "lsb": 16, "xlen": "all", "parent": "EXTENSIONS", "comment": "Quad-precision floating-point extension" },
+        { "name": "EXT_S", "msb": 18, "lsb": 18, "xlen": "all", "parent": "EXTENSIONS", "comment": "Supervisor mode implemented" },
+        { "name": "EXT_U", "msb": 20, "lsb": 20, "xlen": "all", "parent": "EXTENSIONS", "comment": "User mode implemented" },
+        { "name": "EXT_V", "msb": 21, "lsb": 21, "xlen": "all", "parent": "EXTENSIONS", "comment": "Vector extension" },
+        { "name": "EXT_X", "msb": 23, "lsb": 23, "xlen": "all", "parent": "EXTENSIONS", "comment": "Non-standard extensions present" },
+        { "name": "MXL",   "msb": 31, "lsb": 30, "xlen": 32,    "enum": "riscv_mxl_t", "comment": "Machine XLEN (RV32)" },
+        { "name": "MXL",   "msb": 63, "lsb": 62, "xlen": 64,    "enum": "riscv_mxl_t", "comment": "Machine XLEN (RV64)" }
+      ]
     }
   ]
 }
