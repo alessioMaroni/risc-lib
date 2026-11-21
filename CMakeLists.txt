@@ -38,6 +38,7 @@ add_custom_target(generate_csrs DEPENDS "${CSR_OUT_HEADER}")
 # ------------- Library (STATIC) -------------
 add_library(riscvlib STATIC
     src/riscv/csrs/riscv_csrs.c
+    src/riscv/csrs/riscv_mstatus_csr.c
 )
 
 add_dependencies(riscvlib generate_csrs)
@@ -45,7 +46,6 @@ add_dependencies(riscvlib generate_csrs)
 target_include_directories(riscvlib
     PUBLIC
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/riscv"
 )
 
 target_sources(riscvlib
