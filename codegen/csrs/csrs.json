@@ -1,9 +1,77 @@
 {
     "csrs": [
         {
-            "name": "mstatus",
-            "address": "0x300",
-            "fields": []
+            "name"       : "mstatus",
+            "description": "Machine status register.",
+            "address"    : "0x300",
+            "privilege"  : "MRW",
+            "rv32-size"  : "32-bit",
+            "rv64-size"  : "64-bit",
+            "fields"     : {
+                "common" : [
+                    {"name": "WPRI_0",  "lsb": "0",  "msb": "0",  "access": "WPRI"},
+                    {"name": "SIE",     "lsb": "1",  "msb": "1",  "access": "RW"},
+                    {"name": "WPRI_2",  "lsb": "2",  "msb": "2",  "access": "WPRI"},
+                    {"name": "MIE",     "lsb": "3",  "msb": "3",  "access": "RW"},
+                    {"name": "WPRI_4",  "lsb": "4",  "msb": "4",  "access": "WPRI"},
+                    {"name": "SPIE",    "lsb": "5",  "msb": "5",  "access": "RW"},
+                    {"name": "UBE",     "lsb": "6",  "msb": "6",  "access": "RW"},
+                    {"name": "MPIE",    "lsb": "7",  "msb": "7",  "access": "RW"},
+                    {"name": "SPP",     "lsb": "8",  "msb": "8",  "access": "RW"},
+                    {"name": "VS",      "lsb": "9",  "msb": "10", "access": "RW"},
+                    {"name": "MPP",     "lsb": "11", "msb": "12", "access": "WARL"},
+                    {"name": "FS",      "lsb": "13", "msb": "14", "access": "RW"},
+                    {"name": "XS",      "lsb": "15", "msb": "16", "access": "RO"},
+                    {"name": "MPRV",    "lsb": "17", "msb": "17", "access": "RW"},
+                    {"name": "SUM",     "lsb": "18", "msb": "18", "access": "RW"},
+                    {"name": "MXR",     "lsb": "19", "msb": "19", "access": "RW"},
+                    {"name": "TVM",     "lsb": "20", "msb": "20", "access": "RW"},
+                    {"name": "TW",      "lsb": "21", "msb": "21", "access": "RW"},
+                    {"name": "TSR",     "lsb": "22", "msb": "22", "access": "RW"},
+                    {"name": "SPELP",   "lsb": "23", "msb": "23", "access": "RW"},
+                    {"name": "SDT",     "lsb": "24", "msb": "24", "access": "RW"},
+                    {"name": "WPRI_25", "lsb": "25", "msb": "30", "access": "WPRI"}
+                ],
+                "rv32" : [
+                    {"name": "SD",      "lsb": "31", "msb": "31", "access": "RO"}
+                ],
+                "rv64" : [
+                    {"name": "WPRI_31", "lsb": "31", "msb": "31", "access": "WPRI"},
+                    {"name": "UXL",     "lsb": "32", "msb": "33", "access": "WARL"},
+                    {"name": "SXL",     "lsb": "34", "msb": "35", "access": "WARL"},
+                    {"name": "SBE",     "lsb": "36", "msb": "36", "access": "RW"},
+                    {"name": "MBE",     "lsb": "37", "msb": "37", "access": "RW"},
+                    {"name": "GVA",     "lsb": "38", "msb": "38", "access": "RW"},
+                    {"name": "MPV",     "lsb": "39", "msb": "39", "access": "RW"},
+                    {"name": "WPRI_40", "lsb": "40", "msb": "40", "access": "WPRI"},
+                    {"name": "MPELP",   "lsb": "41", "msb": "41", "access": "RW"},
+                    {"name": "MDT",     "lsb": "42", "msb": "42", "access": "RW"},
+                    {"name": "WPRI_43", "lsb": "43", "msb": "62", "access": "WPRI"},
+                    {"name": "SD",      "lsb": "63", "msb": "63", "access": "RO"}
+                ]
+            }
+        },
+        {
+            "name"       : "mstatush",
+            "address"    : "0x310",
+            "privilege"  : "MRW",
+            "rv32-size"  : "32-bit",
+            "rv64-size"  : null,
+            "fields"     : {
+                "common" : [],
+                "rv32"   : [
+                    {"name": "WPRI_0",  "lsb": "0",  "msb": "3",  "access": "WPRI"},
+                    {"name": "SBE",     "lsb": "4",  "msb": "4",  "access": "RW"},
+                    {"name": "MBE",     "lsb": "5",  "msb": "5",  "access": "RW"},
+                    {"name": "GVA",     "lsb": "6",  "msb": "6",  "access": "RW"},
+                    {"name": "MPV",     "lsb": "7",  "msb": "7",  "access": "RW"},
+                    {"name": "WPRI_8",  "lsb": "8",  "msb": "8",  "access": "WPRI"},
+                    {"name": "MPELP",   "lsb": "9",  "msb": "9",  "access": "RW"},
+                    {"name": "MDT",     "lsb": "10", "msb": "10", "access": "RW"},
+                    {"name": "WPRI_11", "lsb": "11", "msb": "31", "access": "WPRI"}
+                ],
+                "rv64"   : []
+            }
         }
     ]
 }

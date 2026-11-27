@@ -45,12 +45,6 @@ typedef enum
 
 #define MSTATUS_SD_MASK   ((riscv_xlen_t)1U << MSTATUS_SD_SHIFT)
 
-/*
- * TODO: Implementare in riscv_mstatus.c le definizioni delle funzioni
- *       static inline (__mstatus_get_*) e i relativi wrapper pubblici
- *       (mstatus_get_*, mstatus_is_sd_set) dichiarati qui sotto.
- */
-
 __attribute__((always_inline)) static inline riscv_priv_mode_t
 __mstatus_get_mpp(riscv_xlen_t mstatus);
 
